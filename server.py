@@ -14,14 +14,23 @@ def home():
     return render_template('index.html')
 
 # Create the emotion detection API
-@app.route('/emotionDectector')
+@app.route('/emotionDetector')
 def emotionDectector():
     ''' Uses Watson AI to determine the
         relevant emptions
     '''
     textToAnalyze = request.args.get('textToAnalyze')
-    response = emotion_detection('textToAnalyze')
-    return response
+    response = emotion_detector('textToAnalyze')
+    anger = response['anger']
+    disgust = response['disgust']
+    fear = response['fear']
+    joy = response['joy']
+    sadness = response['sadness']
+    dominant_emotion = response['dominant_emotion']
+    return f'''For the given statement, the system
+        response is 'anger': {anger}, 'disgust': {disgust},
+        'fear': {fear}, 'joy': {joy}, and 'sadness'
+        : {sadness}. The dominant emotion is {dominant_emotion}'''
 
 if __name__ == "__main__":
     ''' This functions executes the flask
