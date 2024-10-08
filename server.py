@@ -20,7 +20,13 @@ def emotionDectector():
         relevant emptions
     '''
     textToAnalyze = request.args.get('textToAnalyze')
-    response = emotion_detector('textToAnalyze')
+    response = emotion_detector(textToAnalyze)
+    try:
+        dominant_emotion = response['dominant_emotion']
+        if dominant_emotion == None:
+            return 'Invalid text! Please try again!'
+    except:
+        return 'Something went wrong. Please contact the system administrator.'    
     anger = response['anger']
     disgust = response['disgust']
     fear = response['fear']
